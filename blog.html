@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<h1> blog of nick</h1>
+<div id="entry1">
+    <h2>RocketSuite: project synthesis and goals</h2>
+    <h3>2/22/26</h3>
+    <p>During my senior year of college I developed a solid rocket motor simulator in MATLAB. It was capable of taking propellant characteristics and geometry input
+        through a selected excel file, simulating the burn using the FMM (fast marching method) numerical method, and displaying results contours of how the motor burned
+        over time as well as graphing parameters like Kn, thrust, chamber pressure over time. The need for this project came from the desire to simulate chamfered BATES 
+        grains, which the current motor simulation software my team used, OpenMotor, did not support. I would be remiss not to credit OpenMotor as inspiration for my simulator.
+        I looked over OpenMotor's GitHub page before starting and saw that it used the FMM numerical method, which I used as a starting point for my simulator. However, I
+        wanted this to be my own, so the idea to use FMM, the use of two equations, and variables outputted in the GUI is the extent of inspiration from OpenMotor. I eventually
+        got my simulator to work, with results comparable to OpenMotor. Then, I added pseudo-finocyl grain geometry capability. During this, I noticed that my simulator was
+        significantly slower than OpenMotor. To address this, instead of using a pre-written MATLAB toolbox for FMM, I wrote my own FMM method in MATLAB and exported it into
+        C. This whole process required significant modifications to the code, but in the end it reduced runtime by 90%. I thought that was cool.
+    </p>
+    <p>    
+        It was a satisfying project that kept evolving with my rocketry team's needs, but it never actually ended up being used. And since then I've been thinking of
+        how I can improve or build upon my experience of this project. An idea of a full-stack rocket simulation software has been floating around my head for a
+        while, and although it feels like a huge endeavor, I think it would be a great way to learn about all aspects of rockets. So I'm officially declaring Sunday,
+        February 22nd, 2026, as the official start of this "RocketSuite" project! Some ideas I have about what I want this to be:
+    </p>
+    <ul>
+        <li>It is definitely going to be open source. There are a lot of people that know a lot more about rocketry than me, and having anyone interested being able to review 
+            my code is super helpful.
+        </li>
+        <li>For the solid rocket motor side, I want the main simulation engine to be able to import CAD files, like STEP files, and conduct 3D simulations of the burn.
+            This is a big step up in fidelity from my last simulator, which just simulates 2D slices of a 3D motor. Being able to conduct a true 3D simulation would allow
+            me to capture the effects of more complex 3D geometries. Once imported, I also want the capability to select which faces are inhibited directly from the GUI.
+            Plus, having the capability to simulate from CAD files will eliminate the need to code multiple grain geometry profiles.
+        </li>
+        <li>I really don't know anything about how liquid or hybrid rocket motors are simulated, aside from CFD. If there is anything I can do that is short of programming
+            a full CFD engine, I am interested in learning and implementing it.
+        </li>
+        <li>Once a motor has been simulated, I'd like the ability to switch tabs within the program and begin general rocket geometry development, something akin to
+            OpenRocket. I'd also like to include some capabilities of RASAero. I think it would be cool to use CAD files for this as well, but knowing how complex rocket
+            CAD can get as opposed to solid motor CAD, I'm not sure if this is feasible for me. In any case, I want to be able to simulate the trajectory of a finished rocket.
+            I don't plan on including any commercial parts like OpenRocket as I want this tool to be geared more towards specialists.
+        </li>
+        <li>Basically, any calculation or consideration you make when designing a rocket, I want to be part of this program.</li>
+    </ul>
+</div>
+</html>
