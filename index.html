@@ -1,9 +1,241 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <title>Nick Sprague</title>
+     <style>
+        .columns {
+            display: flex;
+            gap: 40px;
+        }
+
+        .column {
+            flex: 1;
+        }
+        figure {
+            text-align: center;
+        }
+
+        figcaption {
+            margin-top: 8px;
+            font-style: italic;
+        }
+        .figure-row {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .figure-row figure {
+            margin: 0;
+            flex: 1;
+        }
+
+        .figure-row img {
+            height: auto;
+        }
+
+        .figure-row figcaption {
+            text-align: center;
+            margin-top: 8px;
+        }
+    </style>
+</head>
 <body>
-    <h1>Nick Sprague's Website</h1>
+    
+    <h1>Nick Sprague</h1>
     <nav>
-        <a href="blog.html">Blog</a>
+        <a href="resume.pdf">Resume</a> | 
+        <a href="https://www.linkedin.com/in/nasprague">LinkedIn</a> 
     </nav>
+    <p>Working as a Structural Engineer I at General Dynamics Electric Boat</p>
+    <nav>
+    <a href="#rocketsuite">RocketSuite</a> |
+    <a href="#winder">Filament Winder</a> |
+    <a href="#yoyo">Yo-Yo Despin</a>
+</nav>
+    <hr>
+    
+
+            <h2 id="rocketsuite">RocketSuite</h2>
+            <hr>
+            <h3> MATLAB Prototype: Parameterized 2D Geometry Discretization</h3>
+            <p>Developed during my senior year of college to support my university rocketry club's (AeroBing) ability to simulate complicated SRM geometries.
+            Supports multi-grain BATES and chamfered BATES, finocyl, pseudo-finocyl, star, and pseudo-star grain geometries. Runs entirely self-contained
+            on a custom MATLAB application (i.e. no external toolboxes needed). I developed my own implementation of the Fast Marching Method (FMM) in MATLAB
+            and exported it to C++ for reduced runtime. User-specified input parameters allow customization of all parameterized dimensions for any supported
+            grain geometry. BATES grains are simulated by discretizing a rectangular 2D slice of the motor along the axial dimension since they are radially symmetric about
+            the axial dimension. All other grains are simulated by discretizing a circular 2D slice of the motor normal to the axial dimension because they aren't radially
+            symmetric. For non-BATES motor geometries that vary along the axial dimension, such as pseudo-finocyl or pseudo-star, multiple 2D slices are taken along the varying section.
+            </p>
+            <p>Once the geometry discretization is complete, the basic logic loop of a SRM simulation is as follows:</p>
+            <ol>
+                <li>Calculate the new burn rate based on chamber pressure</li>
+                <li>Progress the motor burnfront over one timestep using the new burn rate with FMM</li>
+                <li>Determine the new burning surface area after one timestep</li>
+                <li>Calculate the new Kn based on the new burning surface area</li>
+                <li>Calculate the new chamber pressure based on the new Kn</li>
+            </ol>
+            <p>There is a substantial amount of pre and post-processing, as well as geometric calculations, but that is the general gist. This loop repeats until
+                the entire grain is burnt. Then the post-processing begins, which calculates key metrics based on the recorded chamber pressure, Kn, exposed surface area,
+                etc. throughout the burn simulation.
+            </p>
+            <div class="figure-row">
+                <figure>
+                    <img src="images/bates_sim.png", width = "1000">
+                    <figcaption>Basic two-grain BATES motor</figcaption>
+                </figure>
+
+                <figure>
+                    <img src="images/kn_comparison.PNG", width = "620">
+                    <figcaption>Comparison of Kn of basic BATES grain (shown on left) versus OpenMotor simulator</figcaption>
+                </figure>
+            </div>
+            <div style="height: 50px;"></div>
+            <div class="figure-row">
+                <figure>
+                    <img src="images/finocyl.png", width = "1000">
+                    <figcaption>Pseudo-finocyl grain motor - slider can be used to display cross section at different sections of motor</figcaption>
+                </figure>
+
+                <figure>
+                    <img src="images/thrust.png", width = "800">
+                    <figcaption>Pseudo-finocyl motor (shown on left) thrust curve</figcaption>
+                </figure>
+            </div>
+            <h3> Python Iteration: CAD STEP 3D Geometry Voxelization</h3>
+            <p>The next iteration of this simulator is written in Python and is still under development. It is intended to be a module of a larger full-stack
+                high-performance amateur rocket design software called "RocketSuite". This iteration is capable of importing a .STEP CAD file and natively selecting
+                faces to define them as either inhibited or burning. It then voxelizes the step, or creates 3D discretization of the entire STEP model, and initially 
+                tags voxels as either unburnt or burning based on the aforementioned face selection. This enables a simulation to capture localized burning
+                effects such as erosive burning, as well as represent motors that vary along the axial dimension with a higher fidelity.
+            </p>
+            <p>The next step for this iteration is fairly straightforward: add a 3D implementation of FMM. Beyond that, however, there are lots of interesting
+                possibilities that 3D simulation enables. For example, the air within the core of the motor may also be voxelized, and a rudimentary CFD simulation could
+                be conducted to accurately capture Mach number and mass flux variations within the core to further refine erosive burning models.
+            </p>
+            <div class="figure-row">
+                <figure>
+                    <img src="images/rs_faces.PNG">
+                    <figcaption>RocketSuite selection of inhibited faces (blue) and burn faces (red)</figcaption>
+                </figure>
+
+                <figure>
+                    <img src="images/rs_voxel.png", width="420">
+                    <figcaption>RocketSuite voxelization of basic core-burning motor</figcaption>
+                </figure>
+            </div>
+
+
+
+            <hr>
+            <h2 id="winder">Composite Airframe 4-Axis CNC Filament Winder</h2>
+            <hr>
+            <p>For my senior design project, I led a team of six mechanical engineering seniors to design, manufacture, assemble, test, and complete
+            a 4-axis CNC filament winder over the course of our senior year. The eventual goal was to utilize the winder to produce rocket airframes 
+            out of wound composite material such as carbon fiber. 
+            </p>
+            <figure>
+                <img src="images/winderoverview.png">
+                <figcaption>Overview of filament winder subsystems</figcaption>
+            </figure>
+            <p>The axes of motion are as follows:</p>
+            <ol>
+                <li>Movement of the carriage along the mandrel axis</li>
+                <li>Rotation of the mandrel</li>
+                <li>Movement of the deposition arm radial to the mandrel (enables closer deposition for mandrels with varying diameters)</li>
+                <li>Rotation of the filament deposition spool (enables end-winding)</li>
+            </ol>
+            <p>I divided our group into three subteams: chassis, carriage, and electronics. In addition to overseeing the entire project, 
+                I worked on the carriage subteam, which is responsible for moving back and forth along the mandrel and depositing filament. It also contains two of the four axes of movement.
+            </p>
+            <figure>
+                <img src="images/windercarriage.png">
+                <figcaption>Carriage subsystem side view</figcaption>
+            </figure>
+            <p>The first axis of movement contained within the carriage is the extension of the deposition arm. This allows the filament to be deposited
+                closer to or further away from the mandrel and is useful for mandrels of varying diameters such as nosecones or nozzles.
+            </p>
+            <div class="figure-row">
+                <figure>
+                    <img src="images/winderarm_un.png">
+                    <figcaption>Deposition arm (unextended)</figcaption>
+                </figure>
+
+                <figure>
+                    <img src="images/winderarm_ext.png">
+                    <figcaption>Deposition arm (extended)</figcaption>
+                </figure>
+            </div>
+            <p>The second axis of movement contained within the carriage is the rotation of the filament deposition spool. This allows the ends of a mandrel
+                to be wound, similar in manner to a pressure vessel, and increases the possible wind patterns AeroBing may use.
+            </p>
+            <figure>
+                <img src="images/winderrotator.png">
+                <figcaption>Filament deposition spool rotator</figcaption>
+            </figure>
+            <p>After manufacturing, assembling, and troubleshooting, we conducted a dry-wind demonstration at our senior design presentation event.
+            The project was passed onto AeroBing for further refinement and wet-wind testing.
+            </p>
+            <figure>
+                <video controls src="images/winderclip.mp4"></video>
+                <figcaption>Winder dry-wind demonstration</figcaption>
+            </figure>
+            <hr>
+            <h2 id="yoyo">Yo-Yo Despin Concept Design</h2>
+            <hr>
+            <p>My junior design project tasked students with developing a concept design. To reduce the amount of drag experienced by the
+            rocket attributed to spin (more significant effects occur in the second half of the launch), I chose to devise a yo-yo despin system.
+            This method involves two weights that are attached to the rocket body. Each weight is also
+            connected to its own cable that is wrapped around the rocket body along a grooved cut before the flight. At
+            a certain point during the rocket flight, after motor burnout, the despin
+            system is activated and two ’detachments’ take place. Weight detachment occurs first, in which the weights
+            are simultaneously released from the rocket body. This weight detachment is the only non-autonomous
+            process in this despin method, meaning once this has occurred the rest of the despin method is carried out
+            to completion automatically. After weight detachment, the cables attached to the weights unwind until the
+            cables are co-linear with a radius of the rocket body. At this exact moment, cable detachment occurs and
+            the cables are also simultaneously released from the rocket.
+            </p>
+            <figure>
+                <img src="images/yoyo_diagram.png">
+                <figcaption>Yo-Yo despin deployment diagram (Bush, Kenneth S. NASA Langley Research Center, Langley, VA, 1967, Yo-Yo Despin Mechanisms)</figcaption>
+            </figure>
+            <p>The main design space for this system lies in the optimization of cable length versus the total mass of the weights. The relationship between
+                these two variables was derived and a design curve was created. The optimal combination minimizes the total mass added to the rocket
+                and minimizes the cable length. A shorter cable length is desirable to minimize despin time (reducing entanglement chance from slow execution)
+                and to minimize the maximum rotational deceleration experienced by the rocket. A MATLAB script then determined the optimal cable length
+                and total mass by weighing the two aforementioned criteria equally.
+            </p>
+            <figure>
+                <img src="images/yoyoDespinTime.png">
+                <figcaption>Cable length vs despin time</figcaption>
+            </figure>
+            <figure>
+                <img src="images/yoyoCableLengthWeightMass.png">
+                <figcaption>Design curves for cable length vs total mass, with and without consideration to cable mass</figcaption>
+            </figure>
+
+            <p>Using the optimal combination of total mass and cable length, a system was devised to simultaneously release both weights using a pneumatic
+                cylinder. The weights would take the form of stainless steel eye-hooks, which would be held in place by the extended arm of the pneumatic
+                cylinder. Upon actuation, the arm would retract, and the eye-hooks would be released and begin unwinding. FEA was performed on the eye-hook
+                during the rocket's maximum rotational velocity prior to yo-yo despin deployment to determine its structural adequacy. CFD was performed
+                on the rocket body using the expected upward velocity at time of deployment to evaluate the aerodynamic impact that the grooves left by the cables have.
+                A better storage solution for the cables is likely necessary for any real-world application of a yo-yo despin system to minimize drag.
+            </p>
+            <figure>
+                <img src="images/YoYoAssembly.png">
+                <figcaption>Yo-yo despin module</figcaption>
+            </figure>
+                <div class="figure-row">
+                <figure>
+                    <img src="images/yoyofea.png">
+                    <figcaption>von Mises stress fringe plot of eye-hook</figcaption>
+                </figure>
+
+                <figure>
+                    <img src="images/yoyocfd.png">
+                    <figcaption>Velocity plot of airflow subsequent to yo-yo despin deployment</figcaption>
+                </figure>
+            </div>
+
 </body>
 </html>
